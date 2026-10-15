@@ -1,0 +1,33 @@
+[package]
+name = "tournamint"
+version = "0.1.0"
+edition = "2024"
+# let-chains used by the algorithms are stable from 1.88; `edition = 2024`
+# alone would only need 1.85, so without this a user on 1.85-1.87 would get a
+# raw syntax error inside this crate instead of cargo's version message.
+rust-version = "1.88"
+description = "A Swiss-system, round-robin, elimination and arena tournament pairing/standings engine"
+authors = ["leex <leex@klautcomputing.de>"]
+repository = "https://github.com/hiveboardgame/tournamint"
+readme = "README.md"
+keywords = ["chess", "tournament", "pairing", "swiss", "arena"]
+categories = ["algorithms", "games"]
+# Apache-2.0 for the crate itself, a Rust port of BBP Pairings; BSD-3-Clause
+# for the Edmonds blossom solver under src/matching/, adapted from NetworkX.
+# The Apache text is in Apache-2.0.txt; LICENSE.txt contains the project notices
+# and the BSD-3-Clause text.
+license = "Apache-2.0 AND BSD-3-Clause"
+# The CI config is worth keeping in git and is noise in the published tarball.
+exclude = ["/.github"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"], optional = true }
+smallvec = "1"
+thiserror = "2"
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+serde_json = "1"
